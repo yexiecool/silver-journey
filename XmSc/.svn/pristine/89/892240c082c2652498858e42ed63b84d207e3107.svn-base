@@ -1,0 +1,317 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ include file="/webcom/taglibs.jsp" %>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>熊猫商城 开放平台招商</title>
+		<style>
+		*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+a{
+	text-decoration: none;
+}
+li{
+	list-style: none;
+}
+body{
+	font-size: 14px;
+	font-family: "微软雅黑";
+	color:#666;
+}
+.entering-top{
+	width: 100%;
+	height:auto;
+	overflow: hidden;
+}
+.entering-top>img{
+	width: 100%;
+	position:relative;
+}
+.entering-font{
+	position: absolute;
+	left:0;
+    right:0;
+    top:5rem;
+    margin:0 auto;
+}
+.entering-font>p{
+	width: 100%;
+	line-height: 30px;
+	text-align: center;
+	font-size: 20px;
+	color:#fff;
+}
+.entering-font>p>a{
+	display: inline-block;
+	width: 100px;
+	height:25px;
+	border: 1px solid #fff;
+	background: #aaa;
+	line-height: 23px;
+	font-size: 12px;
+	color:#FFFFFF;
+}
+.entering-top>p{
+	width: 100%;
+	line-height: 25px;
+	padding: 0 15px;
+	text-align: justify;
+}
+.why{
+	width:100%;
+    height:auto;
+    overflow: hidden;
+    padding: 0 15px;
+    position: relative;
+}
+.why>p{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.why>p>span{
+	display: inline-block;
+	width: 85px;
+	height:30px;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 3px;
+	font-size: 12px;
+	background: #efefef;
+}
+.why>div,.information{
+	width: 100%;
+	height:auto;
+	overflow: hidden;
+	text-align: center;		
+	position: relative;
+}
+.why>em,.why>div>em,.information>em{
+	display: inline-block;
+	width:130px;
+	height:1px;
+	background: orangered;
+	margin: 0 auto;
+	position: absolute;
+	left:0;
+	right:0;
+	top:45px;
+}
+.why>div>p{
+	margin-top: 15px;
+}
+.why>div>ul>li>a{
+	display: inline-block;
+	width: 100%;
+	text-align: left;
+	font-size:12px;
+	color:#666;
+	line-height: 20px;
+}
+.why>div>ul>li>a>span{
+	float:right;
+	font-family: "宋体";
+}
+.why>div>a{
+	float:right;
+    color:#999;
+    font-family: "宋体";
+    margin-top: 15px;
+}
+.entering_goin{
+	width: 100%;
+	height:auto;
+	overflow: hidden;
+	padding: 0 15px;
+	margin-top: 30px;
+}
+.entering_goin>img{
+	width: 100%;
+}
+.entering_goin>p{
+	text-align: center;
+	font-size:12px;
+	margin-top: 10px;
+}
+.entering_goin>p>a,.information>p>a{
+  display: inline-block;
+  width: 80%;
+  height:30px;
+  text-align: center;
+  line-height: 30px;
+  color:orangered;
+  border: 1px solid orangered;
+  border-radius:3px;
+}
+.information{
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+.information>p{
+	margin-top: 10px;
+}
+		
+		</style>
+	</head>
+
+	<body style="background:#fff;">
+		<div class="entering-top">
+			<img src="${ctx}/xmMobile/images/zhaoshang.jpg" alt="" />
+			<div class="entering-font">
+				<p></p>
+				<p style="padding:0 10px;"><a href="${ctx }/login!sjsignup.action?cc=1&lscode=${lscode}&custid=${custid}">马上入驻</a></p>
+			</div>
+			<p>熊猫商城开发平台，是为商家提供从入驻到商品销售、售后服务等一系列服务的开放式平台，覆盖服饰、消费品、家电、家居、家具、3C、汽车、旅游等品类。现熊猫商城全面开放招商，期待您的加入。</p>
+		</div>
+		<div class="why">
+			<p>为什么选择熊猫商城开放平台？</p>
+			<em></em>
+			<p>
+				<span>正品商城信誉</span>
+				<span>强大品牌背书</span>
+				<span>海量用户基础</span>
+			</p>
+			<div>
+				<p>我要入驻</p>
+				<em style="width: 50px;top:40px"></em>
+				<p style="color:#FF4500">线下招商会</p>
+				
+				<ul>
+				<c:forEach items="${joinlist}" var="shopjoin">
+					<li><a    href="javascript:selectdetail('${shopjoin._id}');" >${shopjoin.title}<span>>></span></a></li>
+				</c:forEach>
+				<!-- 
+					<li><a href="#">熊猫超市西安食品饮料日用品招商会<span>>></span></a></li>
+					<li><a href="#">熊猫商城进口商品招商会，西安站<span>>></span></a></li>
+					<li><a href="#">熊猫商城家电家居类目商家交流会（西安）<span>>></span></a></li>
+				 -->
+				</ul>
+				
+				<a  href="${ctx}/shop/shopjoin!shopjoinlist.action" >查看更多></a>
+			</div>
+		</div>
+		<div class="entering_goin" style="margin-top: 0px;">
+			<img src="${ctx }/xmMobile/images/ruzhu2.jpg" alt="" /> 
+			<p><a href="${ctx }/login!sjsignup.action?cc=1&lscode=${lscode}&custid=${custid}">马上入驻</a></p>
+			<p>您可以使用电脑登陆http://xmshop365.com申请入驻</p>
+		</div>
+		<div class="information" >
+			<p>入驻相关信息</p>
+			<em style="width: 80px;top:35px"></em>
+			<p>您可以在入驻前，提前查询入驻前所需资质材料</p>
+			<p onclick="zfxy()"><a style="margin-left: 0;" href="#" >资质和费用查询</a></p>
+			<p>如果您遇到 问题，可以联系对应类目招商</p>
+			<p onclick="lxxy()"><a style="margin-left: 0;" href="#">查看联系方式</a></p>
+		</div>
+		
+	</body>
+	<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
+		<script src="${ctx}/mvccol/mui-js/mui.picker.js"></script>
+<script src="${ctx}/mvccol/mui-js/mui.poppicker.js"></script>
+		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
+		<link href="${ctx}/xmMobile/css/style.css" rel="stylesheet" />
+		<link href="${ctx}/mvccol/mui-css/mui.picker.css" rel="stylesheet"/>
+	    <link href="${ctx}/mvccol/mui-css/mui.poppicker.css" rel="stylesheet"/>
+	    <style>
+	        .mask{height:100%; width:100%; position:fixed; top:0; z-index:100000; display: none;}
+			.opacity{ opacity:0.5; filter: alpha(opacity=30); background-color:#000; }
+			.zxxcontent{ font-size:0.9rem; height:400px; width:80%; overflow:auto;  background:#fff;position:fixed; padding:2% 8% 0 8%; top:15%; display: none;left:10%; z-index:100001; word-wrap:break-word;}
+			.zxxcontent a{opacity:0.5;display: block; background: black; border-radius: 50%; width: 1.5rem; height: 1.5rem; text-align: center;  line-height: 1rem; position:fixed; right:12%; z-index: 1003;top:16%;}
+			.zxxcontent a{ font-size: 1.2rem; line-height: 1.5rem; color: #fff;  }
+			.zxxcontent p{text-indent: 1.5em; font-size: 0.9rem;}
+			.zxxcontent span{display:block;width: 100%;height: 2.5rem; line-height:2.5rem;text-align:center; margin-top: 2rem; }
+			.zxxcontent h3{ font-size: 1.4rem; margin-top: 0px; padding: 0 6%;  }
+	    	
+	    </style>
+		<div class="mask opacity" id="mask" > </div>
+		<div class="zxxcontent" id="zxxcontent">
+			<a href="javascript:;" id="close" class="close">×</a><br />
+			<div>商城主模块<br/>
+				●大众区<br/>
+				●会员区<br/>
+				●特约区<br/>
+				资质要求<br/>
+				企业资质<br/>
+				◎ 营业执照复印件（通过最新年检）<br/>
+				◎ 法人身份证复印件<br/>
+				◎ 税务登记证复印件（国税加地税）<br/>
+				◎ 开户银行许可证复印件（个体户不需要）<br/>
+				◎ 商标注册证复印件（商标正在申请品牌提供《商标受理通知书》）<br/>
+				◎ 品牌销售授权证明复印件（注册人与授权人的关系证明）<br/>
+				◎ 质检报告复印件或产品质量合格证明（如实委托办理需要出事委托书，不同品牌类目产品均需提供一份）<br/>
+			经营资质<br/>
+				◎	商标注册证/商品注册申请书<br/>
+				◎	销售授权书<br/>
+				◎	质检、检疫、检验报告<br/>
+				◎	卫生/生产许可证<br/>
+				◎	其他资质（据不同产品提供相应的国家产品认证证书）<br/>
+				入驻费用<br/>
+				大众区<br/>
+				◎扣点：<br/>
+				平台使用费：100（元/月） 按每季度缴费<br/>
+				质保金：2000（元）<br/>
+				会员区<br/>
+				◎扣点：<br/>
+				平台使用费：<br/>
+			质保金：<br/>
+				特约区<br/>
+				◎扣点：<br/>
+				平台使用费：100（元/月） 按每季度缴费<br/>
+				质保金：20000（元）</div>
+			
+		</div>
+		
+		<div class="zxxcontent" id="zxxcontent2">
+			<a href="javascript:;" id="close2" class="close">×</a><br />
+			<div>
+				招商联系方式<br/>
+				招商电话：<br/>
+				招商一部：029-62502616<br/>
+				招商二部：029-62502606<br/>
+				招商三部：029-62502618<br/>
+				招商四部：029-68786930<br/>
+				招商五部：029-62502605<br/>
+				邮箱：<br/>
+				Xmshop365@sina.cn<br/>
+				负责区域：<br/>
+				全国<br/>
+			</div>		
+		</div>
+				
+		
+		<script>
+		function selectdetail(id) {
+			location.href = "${ctx}/shop/shopjoin!selectdetail.action?_id="+ id;
+	     } 
+		  function zfxy() {	  
+		        document.getElementById("mask").style.display = "block";
+		        document.getElementById("zxxcontent").style.display = "block";
+		        $("body").css("position","fixed");
+		    }
+		
+		   $('#close').click(function () {
+	            $('.mask').hide();
+	            $('#zxxcontent').hide();	
+	            $("body").css("position","static");
+	            
+	        })		
+									
+			function lxxy(){
+			   document.getElementById("mask").style.display = "block";
+		       document.getElementById("zxxcontent2").style.display = "block";    
+		       $("body").css("position","fixed");
+			}
+		   $('#close2').click(function () {
+	            $('.mask').hide();
+	            $('#zxxcontent2').hide();
+	            $("body").css("position","static");
+	           
+	        })
+		</script>
+</html>

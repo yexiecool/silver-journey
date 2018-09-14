@@ -1,0 +1,270 @@
+﻿<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webcom/taglibs.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>商场首页</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
+		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		<link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>       
+        <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/panda.css" >
+		<link rel="stylesheet" href="${ctx}/xmMobile/iconfont/iconfont.css">
+		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/swiper.css" />
+		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		<link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="${ctx}/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>
+		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script src="${ctx}/mvccol/js/mtlb.js"></script>
+	    <script type="text/javascript" src="${ctx }/app/js/bbsSwipe.js"></script>
+	    <script type="text/javascript" src="${ctx }/app/js/swipe.js"></script>       		
+	</head>
+	<script>
+		$(function(){
+			   mui.init({
+					swipeBack:true //启用右滑关闭功能
+				});
+				var slider = mui("#slider");
+				slider.slider({
+							interval: 3
+				});
+				
+		})
+	</script>
+
+<script type="text/javascript">
+		
+		 $(document).ready(function() {
+				setInterval('autoScroll("#news")', 2000)
+				initdiscount(1,"discountType");
+				initdiscount(2,"discountType1");
+				initdiscount(3,"discountType2");
+		}); 
+		function autoScroll(obj) {
+			$(obj).find('ul:first').animate({
+				marginTop: -50+'px'
+			}, 500, function() {
+				$(this).css({
+					marginTop: 0
+				}).find('li:first').appendTo(this)
+			})
+		}  
+    
+    
+    $(window).scroll(function () {
+        var offsetY = $(window).scrollTop();
+        var section1 = $("#section1").height();
+        if (section1 - offsetY < 600) {
+            
+        }
+    });
+    
+</script>
+<style type="text/css">
+
+			
+			
+			.news {
+				width: 100%;
+				height: 40px;
+				position: relative;
+		         overflow: hidden;
+				background: #1d2434; margin:10px 0 0 0;	       
+		        padding:0 10px; 
+			}
+			
+			#news li div a{ color:#7cc3df; }
+			.news-cont {
+				display: flex;
+				justify-content: flex-start;
+			}
+			
+			.news-cont .mui-col-xs-10 ul li {
+				//float: left;
+				margin-top:10px;
+				font-size: 11px;
+				line-height: 18px;
+			}
+		   
+			#newsmore {
+				position: relative;
+				text-align: center;
+				line-height: 40px;
+			}
+			
+			#newsmore::after {
+				content: '';
+				width: 1px;
+				height: 30px;
+				background: #eee;
+				position: absolute;
+				top: 5px;
+				left: 0;
+			}
+			
+			.icon-logo {
+				width: 36px;
+				height: 36px;
+				background: url(${ctx}/xmMobile/img/icon/icon-logo.png) no-repeat;
+				background-size: 100% auto;
+				/*margin-top: 10px;*/
+				margin-right: 15px;
+			}
+		
+			
+		</style>
+	   <style>
+	    .goodlist {padding-top:15px; }
+	    .goodlist span{color:#7cc3df; font-size:14px; font-weight:600;  }
+		.goodlist img{ display:block; border-radius:4rem; }
+	    .goodlist2 li{ width:20%; }
+	    .goodlist2 li div{ text-align:center; color:#7cc3df; }
+		.goodlist2 li img{ width:60%; }
+	    .forecont2{ width:100%; padding:4% 4% 20% 4%; background: #1d2434;  }
+	    .forecont2 h1{ font-size: 1.2rem; color:#7cc3df;    }
+	    .forecont2 h1 span a{  float: right; font-size: 1rem; color:#7cc3df; font-weight: normal;   }
+	   	.forecont2 li{ border-bottom: 1px solid #ccc; padding-bottom: 20px;  background: none; position: relative; height: auto;  float: left; width: 100%; background: #1d2434; margin: 20px 0 0 0; }
+	   	.forecont2 div.fl{width: 30%;  }
+	   	.forecont2 div.imggount img{width: 100%; height: auto; margin:0px;   }
+	   	.forecont2 div.textcount{width: 65%; margin: 0px;  }
+	  
+	   	.forecont2 div.textcount p{ font-size: 16px; color:#7cc3df;  }
+	   	.forecont2 div.textcount font{ font-size: 14px; color:#a8a8a8; position: absolute; bottom: 20px; right:0px;  }
+	   	.forecont2 div.textcount font.fontr{right: 0px; }
+	   </style>
+	
+	<body style=" background:#1d2434; padding-top:50px;" >
+		<header class="mui-bar mui-bar-nav" style="background: #1d2434;">
+			<a class=" mui-icon mui-icon-undo mui-pull-left" style="font-size: 24px; color:#fbfaff !important;" href="javascript:history.go(-1)"></a>
+			<h1 class="mui-title" style="color:#fbfaff;">矿机商城首页</h1>
+		</header>
+			
+			<!--轮播图-->
+			<div class="mui-collapse-content">
+				<div id="slider" class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#">
+								<img src="${ctx}/xmMobile/images/banner21.jpg">
+							</a>
+						</div>
+						<!-- 第一张 -->
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="${ctx}/xmMobile/images/banner21.jpg">
+							</a>
+						</div>
+						<!-- 第二张 -->
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="${ctx}/xmMobile/images/banner22.jpg">
+							</a>
+						</div>
+						<!-- 第三张 -->
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="${ctx}/xmMobile/images/banner23.jpg">
+							</a>
+						</div>
+						第四张
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="${ctx}/xmMobile/images/banner24.jpg">
+							</a>
+						</div>
+						额外增加的一个节点(循环轮播：最后一个节点是第一张轮播)
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#">
+								<img src="${ctx}/xmMobile/images/banner21.jpg">
+							</a>
+						</div>
+					</div>
+					<div class="mui-slider-indicator">
+						<div class="mui-indicator mui-active"></div>
+						<div class="mui-indicator"></div>
+						<div class="mui-indicator"></div>
+						<div class="mui-indicator"></div>
+					</div>
+				</div>
+			</div>
+		  
+		   <!--消息滚动-->
+		   <!-- 新闻 -->
+		
+		
+		    <div class="goodlist goodlist2" style="background:  #1d2434; margin-top:10px;">
+			   	<ul>
+			   		<li class="one">
+			   			<a href="${ctx}/integral/miners!szjy.action?custid=${custid}&agid=${agid}&lscode=${lscode}">
+							<font size="6">							 
+				   			  	<div class="fa fa-eercast"></div>			   			 												
+							</font>
+							<span>币宗汇</span>
+						</a>
+			   		</li>
+			   		<li>
+			   			<a href="${ctx}/integral/miners!list.action?custid=${custid}&agid=${agid}&lscode=${lscode}">
+			   				<font size="6">
+			   					<div class="fa  fa-window-restore"></div>
+			   				</font>
+			   				<span>矿机</span>
+			   			</a>
+			   		</li>
+			   		<li>
+			   			<a href="${ctx}/user/relation!mobilefindrelation.action?custid=${custid}&lscode=${lscode}">
+							<font size="6">
+								<div class="fa fa-group"></div>
+							</font>
+							<span>团队</span>
+						</a>
+			   		</li>
+			   		<li>
+			   			<a href="${ctx}/user/fromuser!share.action?custid=${custid}&lscode=${lscode}">
+							<font size="6">
+								<div class="fa fa-share-alt"></div>	  
+							</font>
+							<span>分享</span>
+						</a>
+			   		</li>
+			   		
+			   	</ul>
+		    </div>
+		   
+		  
+		    <!--产品列表-->
+		     <div class="goodcount forecont2" >
+		     	
+		    	<h1>资讯NEWS</h1>
+		    
+		     	<ul>
+		     	<c:forEach items="${wxlist}" var="bean">
+		     	
+		     		<li>
+		     		  <a href="${ctx}/shop/shopzx!selectdetail.action?_id=${bean._id}">
+		     				<div class="imggount fl">	<img src="${filehttp}${bean.logo}"/></div>
+		     				<div class="textcount fr mr" >
+		     					<p>${bean.title}</p>
+								<font> <fmt:formatDate pattern="yyyy-MM-dd" value="${bean.createdate}" /></font>
+		     				</div>    				
+		     		  </a>
+		     		</li>
+		     		 
+		     	</c:forEach>
+		     		
+		     		
+		     	</ul>
+		     </div>
+	
+		<%@include file="/webcom/shop-foot3.jsp" %>
+		
+	</body>
+
+</html>

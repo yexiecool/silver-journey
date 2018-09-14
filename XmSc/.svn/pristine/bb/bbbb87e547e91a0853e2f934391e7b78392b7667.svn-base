@@ -1,0 +1,178 @@
+package com.lsp.user.web;
+
+import com.lsp.email.entity.Email;
+import com.lsp.email.util.EmailUtils;
+import com.lsp.integral.entity.BackRecord;
+import com.lsp.integral.entity.InteProstore;
+import com.lsp.integral.entity.InteSetting;
+import com.lsp.pub.dao.BaseDao;
+import com.lsp.pub.db.MongoSequence;
+import com.lsp.pub.entity.Fromusermb;
+import com.lsp.pub.entity.FuncInfo;
+import com.lsp.pub.entity.GetAllFunc;
+import com.lsp.pub.entity.PubConstants;
+import com.lsp.pub.entity.RoleInfo;
+import com.lsp.pub.util.BaseDate;
+import com.lsp.pub.util.BaseDecimal;
+import com.lsp.pub.util.DBobjectUtil;
+import com.lsp.pub.util.DateFormat;
+import com.lsp.pub.util.DateUtil;
+import com.lsp.pub.util.ListUtil;
+import com.lsp.pub.util.SpringSecurityUtils;
+import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
+import com.lsp.pub.util.UniObject;
+import com.lsp.pub.util.UserUtil;
+import com.lsp.pub.web.GeneralAction;
+import com.lsp.shop.entiy.OrderFormpro;
+import com.lsp.suc.entity.IntegralRecord;
+import com.lsp.user.entity.AgentArea;
+import com.lsp.user.entity.UserInfo;
+import com.lsp.user.entity.UserRelation;
+import com.lsp.website.service.WwzService;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.regex.Pattern;
+
+import net.sf.jasperreports.engine.xml.JRPenFactory.Left;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.activemq.store.jdbc.adapter.DB2JDBCAdapter;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.Results;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.userdetails.User;
+
+/***
+ * 用户关系
+ * 
+ * @author 朱攀
+ *
+ */
+@Namespace("/user")
+@Results({ @org.apache.struts2.convention.annotation.Result(name = "reload", location = "relation.action", params = {
+		"fypage", "%{fypage}" }, type = "redirect") })
+public class RelationAction extends GeneralAction<UserRelation> {
+	private static final long serialVersionUID = -6784469775589971579L;
+
+	private String results = "0";
+	@Autowired
+	private BaseDao baseDao;
+	private String _id;
+	private UserRelation entity = new UserRelation();
+	private MongoSequence mongoSequence;
+	@Autowired
+	private WwzService wwzservice;
+
+	@Autowired
+	public void setMongoSequence(MongoSequence mongoSequence) {
+		this.mongoSequence = mongoSequence;
+	}
+
+	public void set_id(String _id) {
+		this._id = _id;
+	}
+
+	@Override
+	public UserRelation getModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String input() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String update() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String save() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void prepareModel() throws Exception {
+		// TODO Auto-generated method stub
+
+	}
+	//根据会员编号返回子节点的为空的节点 
+	public UserRelation getbyparentnumber(long  parentnumber) {
+		UserRelation ur =null;
+		//根据输入的父类的会员编号查询
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("parentnumber", parentnumber);
+		DBObject db = baseDao.getMessage(PubConstants.USER_RELATION, whereMap);
+		if(db!=null) {
+			UserRelation curr = (UserRelation) UniObject.DBObjectToObject(db, UserRelation.class);
+//			if(curr.getLeftnumber()!=null && curr.getRightnumber()!=null) {
+//				//查询左右区
+//				UserRelation left =getbynumber(curr.getLeftnumber());
+//				UserRelation right =getbynumber(curr.getRightnumber());
+//				if(left !=null   ) {
+//					
+//				}else {
+//					left =new UserRelation();
+//					left.set_id(mongoSequence.currval(PubConstants.USER_RELATION));
+//					left.setParentnumber(curr.getLeftnumber());
+//				}
+//				
+//			}else {  //左右区有一个空位
+//				ur =curr; 
+//			}
+			
+		}else {  //为null 的话说明没有推荐关系
+			long id = mongoSequence.currval(PubConstants.USER_RELATION);
+			ur =new UserRelation();
+			ur.set_id(id);
+			ur.setParentnumber(parentnumber);
+		}
+		
+		
+		return ur;
+	}
+	
+	
+	
+	public UserRelation getbynumber(long number) {
+		UserRelation uRelation  =null;
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("parentnumber", number);
+		DBObject db = baseDao.getMessage(PubConstants.USER_RELATION, whereMap);
+		if(db!=null) {
+			uRelation = (UserRelation) UniObject.DBObjectToObject(db, UserRelation.class);
+		}
+		return uRelation;
+		
+	}
+	
+	
+	
+
+}

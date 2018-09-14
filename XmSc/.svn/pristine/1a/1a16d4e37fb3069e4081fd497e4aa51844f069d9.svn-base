@@ -1,0 +1,57 @@
+package com.lsp.user.entity;
+
+/***
+ * 存储二叉树的数据
+ * 2018-08-31
+ * @author  朱攀
+ *
+ */
+public class Relations   {
+	
+    private  String  pnumber;   //父级会员编号
+	private  String  number ;   // 会员编号
+	private  int     count;     // 当前会员编号包含的人员的数量
+	private  Double  money;     // 累计消费
+	private  int     hierarchy; //层级 0 1 2 3 
+	private  int     position ; //位置，1 左 2右  
+	
+	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public Double getMoney() {
+		return money;
+	}
+	public void setMoney(Double money) {
+		this.money = money;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	public int getHierarchy() {
+		return hierarchy;
+	}
+	public void setHierarchy(int hierarchy) {
+		this.hierarchy = hierarchy;
+	}
+	public int getPosition() {
+		return position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
+	}
+	public String getPnumber() {
+		return pnumber;
+	}
+	public void setPnumber(String pnumber) {
+		this.pnumber = pnumber;
+	}
+ 
+	
+}

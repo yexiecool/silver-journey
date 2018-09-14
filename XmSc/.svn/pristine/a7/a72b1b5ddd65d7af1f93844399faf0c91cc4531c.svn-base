@@ -1,0 +1,36 @@
+﻿<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webcom/taglibs.jsp" %>
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>消费充值</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
+		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		<link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>       
+        <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>		
+	</head>
+    <style>
+		.czcount{width:100%; padding: 80px 15%; margin:0 auto; }
+		.czcount div{ line-height:40px; font-size:16px; color:#7cc3df;}
+		.leftc{float:left;  width:30%; text-align:right;  }
+		.rightc{float:right; width:65%; padding-left:5%;}	
+		.rightc p{color:#7cc3df;}	
+		.clear{ clear:both; } 
+		.czcount input[type=submit]{margin: 20px 0 0 20%; background:#54d86b; border:none; width:60%  }
+    </style>
+	<body style=" background:#1d2434;" >
+		<header class="mui-bar mui-bar-nav" style="background: #1d2434;">
+			<a class=" mui-icon mui-icon-undo mui-pull-left" style="font-size: 24px; color:#fbfaff !important;" href="javascript:history.go(-1)"></a>
+			<h1 class="mui-title" style="color:#fbfaff;">矿机商城首页</h1>
+		</header>
+		<div class="czcount" style="color:#fff;" >
+		              矿机商城首页
+		</div>
+		<%@include file="/webcom/shop-foot3.jsp" %>
+		
+	</body>
+
+</html>

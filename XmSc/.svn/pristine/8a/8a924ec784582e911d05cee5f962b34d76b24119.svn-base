@@ -1,0 +1,214 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webcom/taglibs.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>会员区</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
+		<link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
+		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		<link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
+		<link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="${ctx }/app/css/panda.css" >
+		<link rel="stylesheet" type="text/css" href="${ctx }/app/css/mui.min.css" >
+		<link rel="stylesheet" href="${ctx }/app/iconfont/iconfont.css">
+		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="${ctx}/app/js/iosOverlay.js"></script>
+    	<script src="${ctx}/app/js/spin.min.js"></script>
+    	<script type="text/javascript" src="${ctx }/app/js/jquery.Spinner.js"></script>
+		<script>
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-icon mui-icon-undo mui-pull-left" style="color: #000;" href="javascript:history.go(-1)"></a>
+		    <h1 class="mui-title">商品列表</h1>
+		</header>
+		
+		
+		
+		<!-- <div id="showall"></div> -->
+		<div class='mui-content' style="height: 100%;background-color: #fff;">
+		    <div class="mui-input-row" style="position: relative;margin-top:6px;width:85%;margin-left:7.5%;">
+				<span class="mui-icon mui-icon-search" style="position: absolute;top: 5px;right: 5px;" onclick="goods_search()"></span>
+				<input type="search" name=""  placeholder="Search" style="padding-left: 30px;margin-bottom:6px;background:#eee;text-align: left;" id="sel">
+			</div>
+			
+			
+			<!--轮播图-->
+	<div class="mui-collapse-content">
+		<div id="slider" class="mui-slider">
+			<div class="mui-slider-group mui-slider-loop">
+				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img src="${ctx}/xmMobile/images/banner1.jpg">
+					</a>
+				</div>
+				<!-- 第一张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="${ctx}/xmMobile/images/banner1.jpg">
+					</a>
+				</div>
+				<!-- 第二张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="${ctx}/xmMobile/images/muwu.jpg">
+					</a>
+				</div>
+				<!-- 第三张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="${ctx}/xmMobile/images/cbd.jpg">
+					</a>
+				</div>
+				<!-- 第四张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="${ctx}/xmMobile/images/yuantiao.jpg">
+					</a>
+				</div>
+				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img src="${ctx}/xmMobile/images/shuijiao.jpg">
+					</a>
+				</div>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+	</div>
+    <div class="goodlist">
+	   	<ul>
+	   		<li class="one">
+	   			<a href="">
+					<div><img src="${ctx}/xmMobile/images/1.png"/></div>
+					<span>酒水饮料</span>
+				</a>
+	   		</li>
+	   		<li>
+	   			<a href="">
+	   				<div><img src="${ctx}/xmMobile/images/2.png" alt=""></div>
+	   				<span>美容护肤</span>
+	   			</a>
+	   		</li>
+	   		<li>
+	   			<a href="">
+					<div><img src="${ctx}/xmMobile/images/3.png"/></div>
+					<span>健康保健</span>
+				</a>
+	   		</li>
+	   		<li>
+	   			<a href="">
+					<div><img src="${ctx}/xmMobile/images/4.png"/></div>
+					<span>珠宝玉器</span>
+				</a>
+	   		</li>
+	   		<li>
+	   			<a href="">
+					<div><img src="${ctx}/xmMobile/images/5.png"/></div>
+					<span>水饮茗茶</span>
+				</a>
+	   		</li>
+	   	</ul>
+    </div>
+    <div class="banners">
+    	<img src="${ctx}/xmMobile/images/banner2.jpg" width="100%" height="auto" alt="">
+    </div>
+    <div class="forecont">
+    		<ul>
+	   		<li class="one">
+	   			<a href="">
+	   				<div class="imggount fl"><img src="${ctx}/xmMobile/images/four1good.png"/></div>
+					<div class="textcoun  textcouno fr"><img src="${ctx}/xmMobile/images/fore1name.png" style="width: 80%;" alt=""></div>
+	   			</a>
+	   		</li>
+	   		<li>
+	   			<a href="">
+					<div class="imggount fr"><img src="${ctx}/xmMobile/images/four2good.png"/></div>
+					<div class="textcoun fl"><img src="${ctx}/xmMobile/images/fore2name.png" style="width: 60%; float: right; " alt=""></div>
+				</a>
+	   		</li>
+	   		<li>
+	   			<a href="">
+					<div class="imggount fl"><img src="${ctx}/xmMobile/images/four3good.png"/></div>
+					<div class="textcoun fr"><img src="${ctx}/xmMobile/images/fore3name.png" alt=""></div>
+				</a>
+	   		</li>
+	   		<li>
+	   			<a href="">
+	   				<div class="imggount fr"><img src="${ctx}/xmMobile/images/four4good.png"/></div>
+					<div class="textcoun fl"><img src="${ctx}/xmMobile/images/fore4name.png" style="width: 115%; float: right; " alt=""></div>
+				</a>
+	   		</li>
+	   		<div class="clear"></div>
+	   	</ul>
+    </div>
+       <div class="banners">
+    	<img src="${ctx}/xmMobile/images/allgood.jpg" width="100%" height="auto" alt="">
+    </div>
+    <!--产品列表-->
+     <div class="goodcount">
+     	<ul>
+     		<li>		
+					<div class="textcount fl ml" >
+						<p><span>会员专卖</span>兰奈医用冷敷贴+兰奈水光寡钛</p>
+							<font>￥3360.00</font>
+							<i class="iconfont icon-cart"></i>
+					</div>
+					<div class="imggount fr"><img src="${ctx}/xmMobile/images/imggood1.jpg"/></div>
+     		</li>
+     		<li>
+     				<div class="textcount fr mr" >
+     					<p><span>会员专卖</span>大漠神杞 黑枸杞 酵醇液</p>
+						<font>￥3700.00</font>
+						<i class="iconfont icon-cart"></i>
+     				</div>
+     				<div class="imggount fl"><img src="${ctx}/xmMobile/images/imggood2.png"/></div>
+     		</li>
+     		<li>
+     				<div class="textcount fl ml">
+     					<p><span>会员专卖</span>天伏御品（2012珍藏版）1kg装</p>
+						<font>￥1518.00</font>
+						<i class="iconfont icon-cart"></i>
+     				</div>
+     				<div class="imggount fr"><img src="${ctx}/xmMobile/images/imggood3.png"/></div>
+     		</li>
+     		<li>
+     			<div class="textcount fr mr">
+     					<p><span>会员专卖</span>锐林胶囊</p>
+						<font>￥780.00</font>
+						<i class="iconfont icon-cart"></i>
+     				</div>
+     				<div class="imggount fl"><img src="${ctx}/xmMobile/images/imggood4.png"/></div>
+     		</li>
+     		<li>
+     			     <div class="textcount fl ml">
+     					<p><span>会员专卖</span>儒愿SOD养生酒</p>
+						<font>￥980.00</font>
+						<i class="iconfont icon-cart"></i>
+     				</div>
+     				<div class="imggount fr"><img src="${ctx}/xmMobile/images/imggood5.png"/></div>
+     		</li>
+     	</ul>
+    </div>
+		</div>
+		<%@include file="/webcom/shop-foot.jsp" %>
+		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
+	</body>
+
+</html>

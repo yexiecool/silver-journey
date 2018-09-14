@@ -1,0 +1,148 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+a{
+	text-decoration: none;
+}
+li{
+	list-style: none;
+}
+body{
+	font-size: 14px;
+	font-family: "微软雅黑";
+	color:#666;
+}
+.entering-top{
+	width: 100%;
+	height:auto;
+	overflow: hidden;
+}
+.entering-top>img{
+	width: 100%;
+	position:relative;
+}
+.entering-font{
+	position: absolute;
+	left:0;
+    right:0;
+    top:65px;
+    margin:0 auto;
+}
+.entering-font>p{
+	width: 100%;
+	line-height: 30px;
+	text-align: center;
+	font-size: 20px;
+	color:#fff;
+}
+.entering-font>p>a{
+	display: inline-block;
+	width: 100px;
+	height:25px;
+	border: 1px solid #fff;
+	background: #aaa;
+	line-height: 23px;
+	font-size: 12px;
+	color:#FFFFFF;
+}
+.entering-top>p{
+	width: 100%;
+	line-height: 25px;
+	padding: 0 15px;
+	text-align: justify;
+}
+.why{
+	width:100%;
+    height:auto;
+    overflow: hidden;
+    padding: 0 15px;
+    position: relative;
+}
+.why>p{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.why>p>span{
+	display: inline-block;
+	width: 85px;
+	height:30px;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 3px;
+	font-size: 12px;
+	background: #efefef;
+}
+.why>div,.information{
+	width: 100%;
+	height:auto;
+	overflow: hidden;
+	text-align: center;		
+	position: relative;
+}
+.why>em,.why>div>em,.information>em{
+	display: inline-block;
+	width:130px;
+	height:1px;
+	background: orangered;
+	margin: 0 auto;
+	position: absolute;
+	left:0;
+	right:0;
+	top:45px;
+}
+.why>div>p{
+	margin-top: 15px;
+}
+.why>div>ul>li>a{
+	display: inline-block;
+	width: 100%;
+	text-align: left;
+	font-size:12px;
+	color:#666;
+	line-height: 20px;
+}
+.why>div>ul>li>a>span{
+	float:right;
+	font-family: "宋体";
+}
+.why>div>a{
+	float:right;
+    color:#999;
+    font-family: "宋体";
+    margin-top: 15px;
+}
+.entering_goin{
+	width: 100%;
+	height:auto;
+	overflow: hidden;
+	padding: 0 15px;
+	margin-top: 30px;
+}
+.entering_goin>img{
+	width: 100%;
+}
+.entering_goin>p{
+	text-align: center;
+	font-size:12px;
+	margin-top: 10px;
+}
+.entering_goin>p>a,.information>p>a{
+  display: inline-block;
+  width: 80%;
+  height:30px;
+  text-align: center;
+  line-height: 30px;
+  color:orangered;
+  border: 1px solid orangered;
+  border-radius:3px;
+}
+.information{
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+.information>p{
+	margin-top: 10px;
+}

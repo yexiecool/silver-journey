@@ -1,0 +1,227 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ include file="/webcom/taglibs.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<%@include file="/webcom/meta.jsp"%>
+<%@include file="/webcom/bracket.jsp"%>
+<%@include file="/webcom/jquery.validate_js.jsp"%>
+<link href="${ctx }/cmp/css/cmp_js_yangshibiao.css" rel="stylesheet"
+	type="text/css" />
+<script type="text/javascript"
+	src="${contextPath}/js/upload/swfobject.js"></script>
+<script type="text/javascript"
+	src="${contextPath}/js/upload/jquery.uploadify.v2.1.4.js"></script>
+<script type="text/javascript" src="${contextPath}/js/upload/upload.js"></script>
+<script src="${contextPath}/UserInterface/My97DatePicker/WdatePicker.js"
+	type="text/javascript"></script>
+<script type="text/javascript">
+ 
+function del(id) {
+	if(confirm('确实要删除吗?')) {
+		location.href = "${ctx}/suc/integral!delete.action?_id="+ id;
+	}		
+}
+function add(){
+	$('#_id').val('');
+	$('#title').val('');
+	$('#summary').val('');
+    $('#uploadresultFour').val('');
+	$('#sort').val(0);
+	$('#url').val('');
+	 
+
+	$('#insadd').modal({
+			show : true
+		});
+}
+function upd(id){
+   var submitData = {
+		id : id
+	};
+	$.post('${ctx}/suc/integral!upd.action', submitData, function(json) {
+		$('#_id').val(json._id);
+		$('#title').val(json.title);
+		$('#summary').val(json.summary);
+		$('#url').val(json.url);
+		$('#sort').val(json.sort);
+		$('#type').val(json.type);
+		$('#uploadresultFour').val(json.picurl);
+		
+
+	}, "json")
+	 
+
+	$('#insadd').modal({
+			show : true
+		});
+}
+ 
+function updfx(type) {
+	var submitData = {
+		fxtype : type
+	};
+	$.post('${ctx}/weixin/sharefx!upd.action', submitData, function(json) {
+		$('#fxtype').val(type);
+		$('#fxtitle').val(json.fxtitle);
+		$('#fxsummary').val(json.fxsummary);
+		$('#oldurl').val(json.oldurl);
+		$('#fxurl').val(json.fxurl);
+		$('#type').val(json.type);
+		$('#uploadresultFour').val(json.fximg);
+		
+
+	}, "json")
+	$('#insfx').modal({
+		show : true
+	});
+
+}
+function savefx() {
+	var submitData = {
+		fxtype : $('#fxtype').val(),
+		fxtitle : $('#fxtitle').val(),
+		fxsummary : $('#fxsummary').val(),
+		oldurl : $('#oldurl').val(),
+		fxurl : $('#fxurl').val(),
+		fximg : $('#uploadresultFour').val()
+	};
+	$.post('${ctx}/weixin/sharefx!ajaxsave.action', submitData, function(json) {
+		window.location.href='${ctx}/whd/wxmatrix.action'; 
+		
+
+	}, "json")
+	$('#inszc').modal({
+		show : true
+	});
+
+}
+function page_submit(num){
+	
+	if(num==-1){
+		$("#fypage").val(0);	
+	}else if(num==-2){
+		$("#fypage").val($("#fypage").val()-1);	
+	}else{
+		$("#fypage").val(num);	
+	}
+
+	$("#custinfoForm").submit();
+}
+function share(url) {
+	window.open("${contextPath}/weixin/share.action?method="+ encodeURIComponent(url));
+}
+
+function exp() {
+	var sel_state=$("#sel_state").val();
+	var sel_type=$("#sel_type").val();
+	var sel_insdate=$("#sel_insdate").val();
+	var sel_enddate=$("#sel_enddate").val(); 
+	location.href = "${ctx }/suc/integral!integerallfromexp.action?comid=${comid}&sel_state="+sel_state+"&sel_insdate="+sel_insdate+"&sel_enddate="+sel_enddate+"&sel_type="+sel_type;
+	
+}
+</script>
+</head>
+
+<body>
+
+	<section>
+
+		<%@include file="/webcom/header-bracket.jsp"%>
+
+		<div class="mainpanel">
+			<%@include file="/webcom/header-headerbar.jsp"%>
+
+			<form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/suc/integralyj.action">
+				<div class="pageheader">
+					<h2> <i class="fa fa-user"></i>我的账单 <span>佣金记录</span> <span>总数：${sums }</span></h2>
+				</div>
+				<div class="panelss ">
+					<div class="panel-body fu10">
+						<div class="row-pad-5">
+							<div class="form-group col-sm-2">
+								<input type="text" id="vipno" name="vipno" value="${vipno}"
+									placeholder="TO-会员编号" class="form-control" />
+							</div>
+							<a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="table-responsive">
+								<table class="table table-primary mb30">
+									<thead>
+										<tr>
+											<th>TO-会员编号</th>
+											<th>FROM-会员编号</th>
+											<th>状态</th>
+											<th>类型</th>
+											<th>时间</th>
+											<th>说明</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${integralyjList}" var="bean">
+											<tr>
+												<td>${bean.vip_no}</td>
+												<td>${bean.cust_no}</td>
+												<c:if test="${bean.state==0}">
+													<td><span style="color: red;">+${bean.value}</span></td>
+												</c:if>
+												<c:if test="${bean.state==1}">
+													<td><span style="color: green;">-${bean.value}</span></td>
+												</c:if>
+												<td><c:choose>
+														<c:when test="${bean.type=='ps_account'}">开通账户</c:when>
+														<c:when test="${bean.type=='tj_account'}">推荐管理员</c:when>
+														<c:when test="${bean.type=='ps_recovery'}">回本后待返</c:when>
+														<c:when test="${bean.type=='shop_bmzt'}">商城收益</c:when>
+														<c:when test="${bean.type=='shop_jfdh'}">下单使用</c:when>
+														<c:when test="${bean.type=='jfcz'}">充值</c:when>
+														<c:when test="${bean.type=='yj_tx'}">佣金提现</c:when>
+														<c:when test="${bean.type=='jf_withdraw'}">提现</c:when>
+														<c:when test="${bean.type=='shop_order'}">订单收益</c:when>
+														<c:when test="${bean.type=='shop_zz'}">转账</c:when>
+														<c:when test="${bean.type=='shop_djzj'}">冻结资金</c:when>
+														<c:when test="${bean.type=='shop_tx'}">商城提现</c:when>
+														<c:when test="${bean.type=='fail_tx'}">提现失败返回</c:when>
+														<c:when test="${bean.type=='hb_account'}">账户回本</c:when>
+														<c:when test="${bean.type=='gxj'}">共享奖</c:when>
+														<c:when test="${bean.type=='shop_share'}">分享奖</c:when>
+														<c:when test="${bean.type=='shop_together'}">共创奖</c:when>
+													</c:choose></td>
+<%-- 												<td>${bean.oid}</td>
+												<td>${bean.order.zfmoney}</td> --%>
+												<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm'
+														value='${bean.createdate}' /></td>
+												<td>${bean.remark}</td>
+											</tr>
+										</c:forEach>
+								</table>
+								<%@include file="/webcom/bracket-page.jsp"%>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- contentpanel -->
+			</form>
+		</div>
+		<!-- mainpanel -->
+	</section>
+	<script>
+jQuery(".select2").select2({
+    width: '100%'
+});
+$('#sel_state').val('${state}').trigger("change"); 
+$('#sel_type').val('${type}').trigger("change"); 
+</script>
+</body>
+</html>

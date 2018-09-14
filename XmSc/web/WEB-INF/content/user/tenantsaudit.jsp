@@ -1,0 +1,294 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ include file="/webcom/taglibs.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%@include file="/webcom/meta.jsp"%>
+<%@include file="/webcom/bracket.jsp"%>
+<%@include file="/webcom/jquery.validate_js.jsp"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				var validator = $("#inscxForm").validate(
+						{
+							rules : {  
+								name : {
+									required : true
+								},
+								sort : {
+									digits : true,
+									required : true
+								}
+
+							},
+							messages : {
+							},
+							highlight : function(element) {
+								jQuery(element).closest('.form-group')
+										.removeClass('has-success').addClass(
+												'has-error');
+							},
+							success : function(element) {
+								jQuery(element).closest('.form-group')
+										.removeClass('has-error');
+							}
+						});
+			});
+	
+	function aud(id) {
+		$('#inszc').modal({
+            show: true
+        });
+		var submitData = {
+                _id: id
+            };
+            $.post('${ctx}/user/tenantsaudit!upd.action', submitData,
+                    function (json) {
+                        $('#_id').val(json._id);
+                        $('#tel').val(json.shop_mobile);
+                        $('#area').val(json.province+""+json.city+""+json.county);
+                        $('#userName').val(json.userName);
+                        $('#id_card').val(json.shop_id_card);
+                        $('#company_name').val(json.company_name);
+                        $('#lisense_number').val(json.lisense_number); 
+                        
+                        if(json.id_card_front!=''&&json.id_card_front!=null){
+                        	$('#id_card_front').attr("src","${ctx}/uploads/"+json.shop_id_card_front);
+                        }
+                        
+                        if(json.id_card_reverse!=''&&json.id_card_reverse!=null){
+                        	$('#id_card_reverse').attr("src","${ctx}/uploads/"+json.shop_id_card_reverse);
+                        }
+                        
+                        if(json.lisense_photo!=''&&json.lisense_photo!=null){
+                        	$('#lisense_photo').attr("src","${ctx}/uploads/"+json.lisense_photo);
+                        }
+                    }, "json") 
+                   
+            
+	}
+	
+	 function page_submit(num){
+	     	
+	     	if(num==-1){
+	     		$("#fypage").val(0);	
+	     	}else if(num==-2){
+	     		$("#fypage").val($("#fypage").val()-1);	
+	     	}else{
+	     		$("#fypage").val(num);	
+	     	}
+
+	     	$("#custinfoForm").submit();
+	     }
+</script>
+</head>
+<body>
+	<section>
+		<%@include file="/webcom/header-bracket.jsp"%>
+		<div class="mainpanel">
+			<%@include file="/webcom/header-headerbar.jsp"%>
+			<form id="custinfoForm" name="custinfoForm" method="post"
+				action="${contextPath}/user/tenantsaudit.action?parentId=${parentId}">
+				<div class="pageheader">
+					<h2>
+						<i class="fa fa-user"></i> 微官网 <span>我要开店-审核</span>
+					</h2>
+					
+				</div>
+				<div class="panelss ">
+			   <div class="panel-body fu10">
+			        <!-- <div class="row-pad-5">
+			            <div class="form-group col-sm-1d">
+			            <input type="text" name="title"  value="${title}" placeholder="地区名称"  class="form-control" />
+			            </div> 
+			            <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
+			
+			        </div> -->
+			    </div><!-- panel-body -->
+				</div><!-- panel -->
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="table-responsive">
+								<table class="table table-striped table-action table-primary mb30">
+									<thead>
+										<tr>
+										    <th class="table-action">真实姓名</th> 
+										    <th class="table-action">身份证号码</th>
+											<th class="table-action">手机号</th> 
+											<th class="table-action">公司名称</th> 
+											<th class="table-action">营业证号</th>
+											<th class="table-action">审核状态</th>
+											<th class="table-action">操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${list}" var="bean">
+											<tr>
+												<td>${bean.userName}</td>
+											    <td>${bean.shop_id_card}</td> 
+												<td>${bean.tel}</td> 
+												<td>${bean.company_name}</td> 
+												<td>${bean.lisense_number}</td>
+												
+					                        	<c:if test="${bean.audit_status=='0'}"><td><span>待审核</span></td></c:if>
+					                        	<c:if test="${bean.audit_status=='1'}"><td><span>审核通过</span></td></c:if>
+					                        	<c:if test="${bean.audit_status=='2'}"><td><span style="color:red;">审核不通过</span></td></c:if>
+												<td class="table-action">
+													<div class="btn-group1">
+														<a data-toggle="dropdown" class="dropdown-toggle"> <i
+															class="fa fa-cog"></i> </a>
+														<ul role="menu" class="dropdown-menu pull-right">
+															<li><a href="javascript:aud('${bean._id}');"><i
+																	class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;审核</a>
+															</li>
+														</ul>
+													</div></td>
+											</tr>
+										</c:forEach>
+								</table>
+								  <%@include file="/webcom/bracket-page.jsp" %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+ 
+<%--弹出层新--%>
+<div id="inszc" class="modal fade bs-example-modal-static"
+     tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close"
+                        type="button">&times;</button>
+                <h4 class="modal-title">
+                    <i class="fa fa-leaf pr-10"></i>我要开店-审核管理
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="inscxForm" action="${ctx}/user/user!save.action" class="form-horizontal" method="post">
+                    <input type="hidden" id="_id" name="_id"/>
+                    
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">手机号码</label>
+                                <input type="text" id="tel" name="tel" style="width:130px;"
+                                       class="form-control" placeholder="请输入" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">地区信息</label>
+                                <input type="text" id="area" name="area" style="width:130px;"
+                                       class="form-control" placeholder="请输入" readonly="readonly"/>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">真实姓名</label>
+                                <input type="text" id="userName" name="userName"
+                                       class="form-control" placeholder="请输入" readonly="readonly"/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                       
+                    <div class="row"> 
+                        
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">身份证号码:</label>
+                                <input type="text" id="id_card" name="id_card"
+                                       class="form-control" placeholder="请输入" readonly="readonly"/>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">公司名称:</label>
+                                <input type="text" id="company_name" name="company_name"
+                                       class="form-control" placeholder="请输入" readonly="readonly"/>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">营业证号码:</label>
+                                <input type="text" id="lisense_number" name="lisense_number"
+                                       class="form-control" placeholder="请输入" readonly="readonly"/>
+                            </div>
+                        </div>
+                           
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">身份证正面照</label>
+                                <img src="" width="140px;" height="80px;" id="id_card_front"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">身份证反面照1</label>
+                                <img src="" width="140px;" height="80px;" id="id_card_reverse"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">营业证照片:</label>
+                                <img src="" width="140px;" height="80px;" id="lisense_photo"/>
+                            </div>
+                        </div>
+                     </div> 
+                      <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">审核意见</label>
+                                 <textarea id="comments" name="comments"  style="width:440px; height:100px; border:solid 1px #eee;  resize:none;" rows="5" cols="10" > </textarea>
+                            </div>
+                        </div>
+                         
+                     </div> 
+                </form>
+                <div class="panel-footer">
+	                <button class="btn btn-primary col-sm-2" onclick="submint_audit(1)" style="padding: 9px 15px;float:left;margin-left:10px;">通过</button>
+	                <button class="btn btn-primary col-sm-2" onclick="submint_audit(2)" style="padding: 9px 15px;float:left;margin-left:50px;">不通过</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+//审核
+function submint_audit(status) {
+    var submitData = {
+    		id:$("#_id").val(),
+    		comments:$("#comments").val(),
+    		audit_status: status
+    };
+    $.post('${ctx}/user/tenantsaudit!ajaxauditsave.action', submitData,
+            function (json) {
+                if (json.state == 0) {
+                    alert("审核完成！");
+                    window.location.reload();
+                }
+            }, "json")
+    $('#inszc').modal({
+        show: true
+    });
+}
+</script>
+	<%@ include file="/webcom/preview.jsp"%>
+	<%@include file="/webcom/cut-img.jsp" %> 
+</body>
+</html>

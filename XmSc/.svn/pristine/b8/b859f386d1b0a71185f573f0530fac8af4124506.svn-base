@@ -1,0 +1,158 @@
+package com.lsp.suc.entity;
+
+import java.util.Date;
+
+import com.mongodb.ReflectionDBObject;
+
+public class IntegralBackreord extends ReflectionDBObject {
+	
+	private Long _id;				//主键
+	
+	private String toUser;			//返给某个用户名称
+	
+	private String toUserLevel;		//待返用户会员级别
+	
+	private String toUserVipno;		//待返会员编号
+	
+	private String fromUser; 		//返给某用户Id
+	
+	private String fromUserid;		//来自那个用户Id
+	
+	private String fromUserLevel;	//来自用户会员级别
+	
+	private String custid;			//来自哪个用户名称
+	
+	private String type;			//类型
+	
+	private String fromVipno;		//来自用户会员编号
+	
+	private String value;			//回本金额
+	
+	private String source;			//来源
+	
+	private String originalValue;	//原始金额
+	
+	private String proportion;		//比例
+	
+	private Date createDate;		//时间
+
+	public Long get_id() {
+		return _id;
+	}
+
+	public void set_id(Long _id) {
+		this._id = _id;
+	}
+
+	public String getToUser() {
+		return toUser;
+	}
+
+	public void setToUser(String toUser) {
+		this.toUser = toUser;
+	}
+
+	public String getToUserLevel() {
+		return toUserLevel;
+	}
+
+	public void setToUserLevel(String toUserLevel) {
+		this.toUserLevel = toUserLevel;
+	}
+
+	public String getToUserVipno() {
+		return toUserVipno;
+	}
+
+	public void setToUserVipno(String toUserVipno) {
+		this.toUserVipno = toUserVipno;
+	}
+
+	public String getFromUser() {
+		return fromUser;
+	}
+
+	public void setFromUser(String fromUser) {
+		this.fromUser = fromUser;
+	}
+
+	public String getFromUserid() {
+		return fromUserid;
+	}
+
+	public void setFromUserid(String fromUserid) {
+		this.fromUserid = fromUserid;
+	}
+
+	public String getFromUserLevel() {
+		return fromUserLevel;
+	}
+
+	public void setFromUserLevel(String fromUserLevel) {
+		this.fromUserLevel = fromUserLevel;
+	}
+
+	public String getCustid() {
+		return custid;
+	}
+
+	public void setCustid(String custid) {
+		this.custid = custid;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getFromVipno() {
+		return fromVipno;
+	}
+
+	public void setFromVipno(String fromVipno) {
+		this.fromVipno = fromVipno;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public String getOriginalValue() {
+		return originalValue;
+	}
+
+	public void setOriginalValue(String originalValue) {
+		this.originalValue = originalValue;
+	}
+
+	public String getProportion() {
+		return proportion;
+	}
+
+	public void setProportion(String proportion) {
+		this.proportion = proportion;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+}

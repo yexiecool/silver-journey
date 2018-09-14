@@ -1,0 +1,274 @@
+package com.lsp.user.web;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.Results;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.lsp.integral.entity.InteSetting;
+import com.lsp.pub.dao.BaseDao;
+import com.lsp.pub.db.MongoSequence;
+import com.lsp.pub.entity.PubConstants;
+import com.lsp.pub.util.BaseDecimal;
+import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
+import com.lsp.pub.util.UniObject;
+import com.lsp.pub.web.GeneralAction;
+import com.lsp.user.entity.UserRelation;
+import com.lsp.website.service.WwzService;
+import com.mongodb.DBObject;
+
+/***
+ * 用户关系
+ * 
+ * @author 朱攀
+ *
+ */
+@Namespace("/user")
+@Results({ @org.apache.struts2.convention.annotation.Result(name = "reload", location = "relation.action", params = {
+		"fypage", "%{fypage}" }, type = "redirect") })
+public class RelationAction extends GeneralAction<UserRelation> {
+	private static final long serialVersionUID = -6784469775589971579L;
+
+	private String results = "0";
+	@Autowired
+	private BaseDao basedao;
+	private String _id;
+	private UserRelation entity = new UserRelation();
+	private MongoSequence mongoSequence;
+	@Autowired
+	private WwzService wwzservice;
+	
+	
+
+	@Autowired
+	public void setMongoSequence(MongoSequence mongoSequence) {
+		this.mongoSequence = mongoSequence;
+	}
+
+	public void set_id(String _id) {
+		this._id = _id;
+	}
+
+	@Override
+	public UserRelation getModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String input() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String update() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String save() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void prepareModel() throws Exception {
+		// TODO Auto-generated method stub
+
+	}
+	/**
+	 * 根据会员编号返回子节点的为空的节点 ,返回插入的节点
+	 * @param parentnumber //推荐人的会员编号
+	 * @param userrelation //返回插入节点的对象
+	 * @return
+	 */
+	public UserRelation getbyparentnumber(UserRelation relation,String   parentnumber) {
+		 
+		//根据输入的父类的会员编号查询
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("parentnumber", parentnumber);
+		DBObject db = basedao.getMessage(PubConstants.USER_RELATION, whereMap);
+		if(db!=null) {
+			UserRelation curr = (UserRelation) UniObject.DBObjectToObject(db, UserRelation.class);
+			if(curr.getLeftnumber()!=null && curr.getRightnumber()!=null) {
+				//如果左右去的人都有，判断当前左右去的业绩，返回业绩小的节点
+				String left =getAchievementbyNumber(curr.getLeftnumber());
+				String right =getAchievementbyNumber(curr.getRightnumber());
+				System.out.println("----左区业绩："+left);
+				System.out.println("----右区业绩："+right);
+				//判断大小区
+				if(Double.valueOf(left) <= Double.valueOf(right)) { //右区为小区 如果都没有业绩获取业绩相等，默认左区
+					getbyparentnumber(relation, curr.getLeftnumber());
+				}else { //左区为小区
+					getbyparentnumber(relation, curr.getRightnumber());
+				}
+				
+			}else {  //左右区有一个空位
+				relation =curr; 
+			}
+			
+		}else {  //为null 的话说明没有推荐关系
+			long id = mongoSequence.currval(PubConstants.USER_RELATION);
+			relation =new UserRelation();
+			relation.set_id(id);
+			relation.setParentnumber(parentnumber);
+		}
+		return relation;
+	}
+	
+	
+	
+ 
+	/**
+	 * 根据父级的会员编号获取对应节点的用户列表
+	 * @param parentnumber 父节点的会员编号
+	 * @param userlist  //返回的list集合
+	 * @return
+	 */
+	public  List<DBObject> getUserList(List<DBObject> userlist,String   parentnumber){
+		//根据输入的父类的会员编号查询
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("parentnumber", parentnumber);
+		DBObject db = basedao.getMessage(PubConstants.USER_RELATION, whereMap);
+		if(db!=null) {
+			UserRelation curr = (UserRelation) UniObject.DBObjectToObject(db, UserRelation.class);
+			HashMap<String,Object> userwhereMap=new HashMap<>();
+			if(curr.getLeftnumber()!=null && curr.getLeftnumber()!="" ) {
+				userwhereMap.clear();
+				userwhereMap.put("no", curr.getLeftnumber());
+				DBObject dbObject= basedao.getMessage(PubConstants.USER_INFO, userwhereMap);
+				if(dbObject!=null) {
+					userlist.add(dbObject);
+				}
+				getUserList( userlist,curr.getLeftnumber()); //递归左区
+			} 
+			if(curr.getRightnumber()!=null && curr.getRightnumber()!="") { 
+				userwhereMap.put("no", curr.getRightnumber());
+				DBObject dbObject= basedao.getMessage(PubConstants.USER_INFO, userwhereMap);
+				if(dbObject!=null) {
+					userlist.add(dbObject);
+				}
+				getUserList(userlist,curr.getRightnumber()); //递归右区
+			} 
+		} 
+		return userlist;  
+	}
+	
+	
+	/**
+	 * 根据输入的会员编号，获取该区业绩(计算本人业绩 =本人的业绩 + 本人节点下所有人的业绩 )
+	 * 个人业绩包含：是否是代理或者报单中心,如果是 他的角色对应的值 + 会员区已完成的订单累计 
+	 * @param number 当前节点的会员编号
+	 * @return 业绩
+	 * 
+	 */
+	public  String getAchievementbyNumber(String number){
+		String  results="0";  //返回的业绩
+		//获取当前会员节点下所有的会员列表
+		List<DBObject> list =new ArrayList<>(); //存取返回的list
+		List<DBObject> userlist =getUserList(list, number);
+		//获取该会员的用户信息
+		HashMap<String,Object>whereMap=new HashMap<>();
+		whereMap.put("no", number);
+		DBObject userdbObject= basedao.getMessage(PubConstants.USER_INFO, whereMap);
+		
+		//判断如果该会员信息无误把自己的信息加入list里面循环计算业绩
+		if(userdbObject!=null && userlist.size()> 0) {
+			userlist.add(userdbObject);
+		}
+		//如果返回的list 为空的话 没有推荐人只计算自己的业绩
+		if(userlist.size()< 0 && userdbObject!=null) {
+			userlist =new ArrayList<>();
+			userlist.add(userdbObject);
+		}
+		//判断userlist的大小，开始循环计算业绩
+		System.out.println("-----计算业绩方法需要计算循环的次数："+list.size()); 
+		System.out.println("*************");
+		//获取系统设置
+		whereMap.clear();
+		whereMap.put("_id", SysConfig.getProperty("custid"));
+		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
+		InteSetting sett=null;
+		if(db!=null){
+			sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
+		}
+		if(userlist.size() > 0) {
+			for (DBObject dbObject : userlist) { 
+				if(dbObject.get("agentLevel")!=null){
+					System.out.println("////当前用户的角色"+dbObject.get("agentLevel"));
+					int level=Integer.parseInt(dbObject.get("agentLevel").toString());
+					//统计本身业绩
+					System.out.println(sett);
+					if(sett!=null){
+						if(level==1){
+							//省
+							results=BaseDecimal.add(results, sett.getReturnProvince()+"");
+						}else if(level==2){
+							//市
+							results=BaseDecimal.add(results, sett.getReturnCity()+"");
+							System.out.println(results);
+							System.out.println(sett.getReturnCity());
+						}else if(level==3){
+							//县
+							results=BaseDecimal.add(results, sett.getReturnCounty()+"");
+						}else if(level==4){
+							//部门
+							results=BaseDecimal.add(results, sett.getReturnDept()+"");
+						}
+					}
+					//统计订单业绩
+					whereMap.clear();
+					whereMap.put("fromUserid",dbObject.get("_id").toString());
+					whereMap.put("state", 4);
+					List<DBObject>orderlist=basedao.getList(PubConstants.WX_ORDERFORM, whereMap,null);
+					for (DBObject dbObject2 : orderlist) {
+						if(dbObject2!=null &&   !dbObject2.get("contri_money").toString().equals("")) {
+							results=BaseDecimal.add(results,dbObject2.get("contri_money").toString());
+						}
+					}
+				} 
+				 
+			}
+		}
+		return results; 
+	}
+	
+	 
+	 
+	
+	//测试类
+	public void test() {
+		String number =Struts2Utils.getParameter("number");
+		List<DBObject> userlist1 = new  ArrayList<>(); 
+		List<DBObject> userlist  =getUserList(userlist1,number);
+		System.out.println("----------------userlist:"+userlist.size());
+		for(int i=0;i<userlist.size();i++) {
+			DBObject db = userlist.get(i);
+			System.out.println("----------------number:"+db.get("no"));
+		}
+		
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		
+		 
+		
+	}
+	
+
+}

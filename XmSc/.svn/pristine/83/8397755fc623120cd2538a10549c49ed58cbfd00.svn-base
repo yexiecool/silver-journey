@@ -1,0 +1,84 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ include file="/webcom/taglibs.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html>
+<head>
+		<meta charset="utf-8" />
+		<title>行情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="${ctx}/xmMobile/css/index.css" />
+		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
+	</head>
+	<body style="background:url('${ctx}/xmMobile/images/kjbg2.jpg') no-repeat top center; background-size:100% 100%;">
+		<header class="mui-bar mui-bar-nav" style="background: #141534;" >
+		    <a class="mui-action-back mui-icon mui-icon-undo mui-pull-left" style="	color:#fbfaff !important;" href="javascript:history.go(-1)"></a>
+		    <h1 class="mui-title" style="color:#fbfaff !important;" >未分配会员列表</h1>
+		</header>
+		<style>
+		.zichan>p>span{color:#7cc3df;}
+		</style>
+		 
+	
+		<!--修改后的-->
+		<div class="zichan" style="padding-top:50px;">
+			<p style="border-top:none;"><span>会员编号</span><span>昵称</span><span style="padding-right:20px">操作</span></p>
+			<div  style="clear: both;"></div>
+			<c:forEach items="${userlist}" var="obj">
+				<p><span>${obj.number}</span>
+				<span>			
+					${obj.nickname}
+				</span>
+				<button type="button" class="mui-btn miner-btnbuy" id="alertBtn"  style="background:#54d86b; color:#fbfaff; float:right; padding:3px 12px; margin-top:15px;   boder:none  !important;">分配</button>
+				</p>
+			</c:forEach>
+		</div>
+		
+		<!--mjy开始-->
+			<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+	        .mask{height:100%; width:100%; position:fixed; top:0; z-index:100000; display: none;}
+			.opacity{ opacity:0.5; filter: alpha(opacity=30); background-color:#000; }
+			.zxxcontent{ font-size:0.9rem; text-align:center; border-radius:20px;  height:200px; width:80%; overflow:auto;  background:#fff;position:fixed; padding:0px; top:28%; display: none;left:10%; z-index:100001; word-wrap:break-word;}			
+			
+			.zxxcontent h1{ width：100%; height:40x; color:#000000;  line-height:40px; font-size: 1rem; margin-top: 0px; padding: 0;  }
+	    	.zxxcontent p{ font-size: 1rem; color:#000000;}
+			.zxxcontent input{display:block;width: 80%; margin:0 auto;  height: 2.5rem; line-height:2.5rem;text-align:center; margin-top: 1rem; }
+	    	.turecont{width:100%; margin-top:2rem; float:left;  border-top: 1px solid #ccc;}
+	    	.turecont button{ width:50%; height:2.5rem; float:left; color:#007aff; border: 0px; }
+	    	.turecont button.left{border-right:1px solid #ccc; }
+	    </style>
+		<div class="mask opacity" id="mask" > </div>
+		<div class="zxxcontent" id="zxxcontent">	
+	        <form action="" method="post" >
+				 <h1>提醒</h1>
+				 <p>请输入您的编号：</p>
+				 <input type="text" name="bh" value="84664"/>
+				<div class="turecont">
+					<button class="left">取消</button>
+					<button class="right" id="close">确定</button>
+				</div>  	     
+	        </form>				
+		</div>
+		<script>
+		 /*  function zfxy() {	  
+		      
+		    } */
+		 $("#alertBtn").click(function(){
+				document.getElementById("mask").style.display = "block";
+ 		        document.getElementById("zxxcontent").style.display = "block";
+ 		        $("body").css("position","fixed");		 
+		 });
+		    
+		    
+		   $('#close').click(function () {
+	            $('.mask').hide();
+	            $('#zxxcontent').hide();	
+	            $("body").css("position","static");            
+	        })		       
+		</script>
+		
+		<!--mjy结束-->
+		
+	</body>
+</html>

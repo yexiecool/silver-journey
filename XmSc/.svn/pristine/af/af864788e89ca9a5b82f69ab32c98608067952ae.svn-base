@@ -1,0 +1,105 @@
+﻿<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/webcom/taglibs.jsp" %>
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>消费充值</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
+		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		<link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>       
+        <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
+		<script src="${ctx}/app/js/iosOverlay.js"></script>
+        <script src="${ctx}/app/js/spin.min.js"></script>
+        <script src="${ctx}/mvccol/js/fomatdate.js"></script>
+        <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<style type="text/css">
+			
+			.miner-txt{
+				display: flex;
+				justify-content: space-between;
+			}
+			.miner-txt-cont{
+				overflow: hidden;
+			}
+			.miner-buyBtn{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.mui-btn.miner-btnbuy{
+				/*background-color:linear-gradient(to bottom top, #e2a60b,#facd04);*/
+				background: linear-gradient(to bottom right, #e2a60b , #facd04);
+				color: #fff;
+			}
+			.mui-table-view .mui-media-object{
+				max-width: 60px;
+				height: 60px;
+				vertical-align: middle;
+			}
+			.mui-table-view-cell.mui-media{
+				margin-bottom: 2px;
+				color:#fff;
+				background:none;
+			}
+			.mui-table-view-cell.mui-media .miner-txt-cont{
+				font-size:16px;
+			}
+			.mui-table-view-cell.mui-media p.mui-ellipsis{
+				color:#fbfaff;
+				font-size:12px; line-height:20px;
+			}
+		</style>
+		<script type="text/javascript">
+		var loading;
+        function  loading(){
+        var opts = {
+		lines: 13, // The number of lines to draw
+		length: 8, // The length of each line
+		width: 4, // The line thickness
+		radius: 13, // The radius of the inner circle
+		corners: 1, // Corner roundness (0..1)
+		rotate: 0, // The rotation offset
+		color: '#FFF', // #rgb or #rrggbb
+		speed: 1, // Rounds per second
+		trail: 60, // Afterglow percentage
+		shadow: false, // Whether to render a shadow
+		hwaccel: false, // Whether to use hardware acceleration
+		className: 'spinner', // The CSS class to assign to the spinner
+		zIndex: 2e9, // The z-index (defaults to 2000000000)
+		top: 'auto', // Top position relative to parent in px
+		left: 'auto' // Left position relative to parent in px
+	}; 
+	   var target = document.createElement("div");
+	   document.body.appendChild(target);
+	   var spinner = new Spinner(opts).spin(target);
+	  loading=iosOverlay({
+		text: "Loading", 
+		spinner: spinner
+	   });
+     }
+ 
+		 
+	 
+		
+		</script>
+	</head>
+
+	<body style=" background:#1d2434;" >
+		<header class="mui-bar mui-bar-nav" style="background: #1d2434;">
+			<a class=" mui-icon mui-icon-undo mui-pull-left" style="font-size: 24px; color:#fbfaff !important;" href="javascript:history.go(-1)"></a>
+			<h1 class="mui-title" style="color:#fbfaff;">消费充值</h1>
+		</header>
+		 <div>
+		 	消费充值页面
+		 </div>
+		<%@include file="/webcom/shop-foot3.jsp" %>
+		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
+		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		 
+	</body>
+
+</html>

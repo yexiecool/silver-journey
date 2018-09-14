@@ -1,0 +1,14 @@
+package com.lsp.util;
+
+public  class  AgentUtil {
+	
+	//省代理每天回本金额
+	private static final Double PROVINCIAL_AGENT = Double.valueOf((1500000/365));
+	
+	//市代理每天回本金额
+	private static final Double CITY_AGENT = Double.valueOf((500000/365));
+	
+	//区县代理每天回本金额
+	private static final Double COUNTY_AGENT = Double.valueOf((150000/365));
+	
+}

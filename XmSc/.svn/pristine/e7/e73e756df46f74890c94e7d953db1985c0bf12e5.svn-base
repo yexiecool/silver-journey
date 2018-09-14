@@ -1,0 +1,47 @@
+package com.lsp.shop.entiy;
+
+import java.util.Date;
+
+import com.mongodb.ReflectionDBObject;
+/**
+ * 商铺入住
+ * @author zp
+ *
+ */
+public class ShopJoin  extends ReflectionDBObject{
+	/**
+	 * 标题
+	 */
+	private String  title;
+	/**
+	 * 内容
+	 */
+	private Long    content;
+	/**
+	 * 创建时间
+	 */
+	 
+	private Date   createdate;
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public Long getContent() {
+		return content;
+	}
+	public void setContent(Long content) {
+		this.content = content;
+	}
+	public Date getCreatedate() {
+		return createdate;
+	}
+	public void setCreatedate(Date createdate) {
+		this.createdate = createdate;
+	}
+	
+	
+	 
+}

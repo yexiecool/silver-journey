@@ -1,0 +1,61 @@
+package com.lsp.shop.entiy;
+
+import java.util.Date;
+
+import com.mongodb.ReflectionDBObject;
+
+/***
+ * 微信支付记录
+ * @author lsp
+ *
+ */
+public class WxPayDetail  extends ReflectionDBObject{
+	//订单编号
+	private String orderid;
+    //来自那个用户
+	private String  fromuserid;
+	//支付状态 0-已支付  1-支付成功 2-支付失败
+	private int  status;
+	//支付金额
+	private Double paymoney ;  
+	//创建时间
+	private Date createdate ;
+	
+	public String getOrderid() {
+		return orderid;
+	}
+	public void setOrderid(String orderid) {
+		this.orderid = orderid;
+	}
+	public String getFromuserid() {
+		return fromuserid;
+	}
+	public void setFromuserid(String fromuserid) {
+		this.fromuserid = fromuserid;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public Double getPaymoney() {
+		return paymoney;
+	}
+	public void setPaymoney(Double paymoney) {
+		this.paymoney = paymoney;
+	}
+	public Date getCreatedate() {
+		return createdate;
+	}
+	public void setCreatedate(Date createdate) {
+		this.createdate = createdate;
+	}
+	
+	
+	
+	
+	
+	
+	
+}
